@@ -1,0 +1,210 @@
+/* =============================================================================
+   Community Information Platform — Firefox Acorn/Nova-inspired theme
+   -----------------------------------------------------------------------------
+   Direction : Acorn/Nova visual language + Firefox warm accent
+   Adapted   : scaled up for elderly accessibility (large type, high contrast,
+               >=48px targets, spacious density)
+   Pattern   : mirrors Acorn's Base -> Application -> Component token tiers and
+               light/dark + prefers-contrast + forced-colors modes.
+   Note      : contrast ratios below were computed with the WCAG 2.x formula and
+               pass AA-normal unless marked otherwise.
+   ============================================================================= */
+
+/* ------------------------------- Base tier -------------------------------- */
+:root {
+  color-scheme: light;
+
+  /* Firefox brand (decorative / brand marks only — #FF7139 is 2.74:1 on white,
+     never use it behind or as text). */
+  --color-firefox-orange: #ff7139;
+  --color-firefox-ink: #15141a;
+
+  /* Warm neutral ramp (adapted from Firefox Ink + warm paper) */
+  --color-ink: #15141a;         /* 18.31:1 on white */
+  --color-paper: #faf7f4;
+  --color-white: #ffffff;
+  --color-gray-05: #f1ece6;
+  --color-gray-30: #b7b2be;
+  --color-gray-60: #5b5560;     /* 7.21:1 on white */
+  --color-gray-80: #3a3944;
+
+  /* Warm accent ramp (Photon/Mozilla "Orange" family) */
+  --color-orange-60: #d76e00;   /* 3.43:1 on white -> large text / UI only */
+  --color-orange-70: #a44900;   /* 5.95:1 on white  -> AA normal text + CTA fill */
+  --color-orange-80: #863b00;   /* 7.96:1 on white  -> hover */
+  --color-orange-90: #5c2900;
+
+  /* Dark surface ramp (Firefox dark theme) */
+  --color-dark-bg: #1c1b22;
+  --color-dark-card: #2b2a33;
+  --color-dark-border: #3a3944;
+  --color-dark-fg: #fbfbfe;
+  --color-orange-30: #ffb877;
+  --color-orange-40: #ff9f4d;   /* 8.39:1 on dark bg */
+
+  --color-green-60: #1b7f3b;    /* 5.07:1 on white */
+  --color-red-60: #c0211b;      /* 6.04:1 on white */
+}
+
+/* --------------------------- Application tier ----------------------------- */
+/* Names follow shadcn/ui conventions so the tokens drop straight into
+   Tailwind + shadcn/ui components. `--primary` is the brand/CTA. */
+:root {
+  --background: var(--color-paper);
+  --foreground: var(--color-ink);
+
+  --card: var(--color-white);
+  --card-foreground: var(--color-ink);
+  --popover: var(--color-white);
+  --popover-foreground: var(--color-ink);
+
+  --primary: var(--color-orange-70);          /* warm CTA, 5.95:1 w/ white text */
+  --primary-foreground: #ffffff;
+  --primary-hover: var(--color-orange-80);
+
+  --secondary: var(--color-gray-05);
+  --secondary-foreground: var(--color-ink);
+
+  --muted: var(--color-gray-05);
+  --muted-foreground: var(--color-gray-60);   /* 6.75:1 on paper */
+
+  --accent: #ffe8d1;                          /* selected / subtle warm bg */
+  --accent-foreground: #5c2900;
+
+  --destructive: var(--color-red-60);
+  --destructive-foreground: #ffffff;
+
+  --border: #e7e2dc;
+  --input: #e7e2dc;
+  --ring: var(--color-orange-70);             /* visible focus ring */
+
+  --brand: var(--color-firefox-orange);       /* decorative only */
+  --success: var(--color-green-60);
+
+  /* Nova-style rounding */
+  --radius: 0.75rem;      /* 12px — base control radius */
+  --radius-card: 1rem;    /* 16px — cards / floating surfaces */
+  --radius-pill: 9999px;  /* pill buttons, chips, nav pills */
+
+  /* Floating / separated surfaces (Nova look) */
+  --shadow-float: 0 2px 8px rgba(21, 20, 26, 0.08), 0 8px 24px rgba(21, 20, 26, 0.06);
+  --shadow-float-strong: 0 4px 12px rgba(21, 20, 26, 0.12), 0 12px 32px rgba(21, 20, 26, 0.10);
+}
+
+/* ------------------------------ Dark mode --------------------------------- */
+.dark {
+  color-scheme: dark;
+
+  --background: var(--color-dark-bg);
+  --foreground: var(--color-dark-fg);
+
+  --card: var(--color-dark-card);
+  --card-foreground: var(--color-dark-fg);
+  --popover: var(--color-dark-card);
+  --popover-foreground: var(--color-dark-fg);
+
+  --primary: var(--color-orange-40);          /* light warm accent, 8.39:1 on dark */
+  --primary-foreground: #1c1b22;              /* dark ink on warm fill */
+  --primary-hover: var(--color-orange-30);
+
+  --secondary: var(--color-dark-card);
+  --secondary-foreground: var(--color-dark-fg);
+
+  --muted: var(--color-dark-card);
+  --muted-foreground: var(--color-gray-30);   /* 6.83:1 on dark card */
+
+  --accent: #3a2a1c;
+  --accent-foreground: #ffd9b3;
+
+  --destructive: #ff6b64;
+  --destructive-foreground: #1c1b22;
+
+  --border: var(--color-dark-border);
+  --input: var(--color-dark-border);
+  --ring: var(--color-orange-40);
+
+  --success: #5fce8a;
+
+  --shadow-float: 0 2px 8px rgba(0, 0, 0, 0.5), 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-float-strong: 0 4px 12px rgba(0, 0, 0, 0.6), 0 12px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* ------------------------- High contrast (Acorn-style) -------------------- */
+@media (prefers-contrast: more) {
+  :root {
+    --muted-foreground: #15141a;
+    --border: #15141a;
+    --accent: #ffe0bf;
+  }
+  .dark {
+    --muted-foreground: #fbfbfe;
+    --border: #fbfbfe;
+  }
+}
+
+@media (forced-colors: active) {
+  :root,
+  .dark {
+    --primary: Highlight;
+    --primary-foreground: HighlightText;
+    --border: CanvasText;
+    --ring: Highlight;
+  }
+}
+
+/* =============================================================================
+   Tailwind v4 mapping  (put this in your main stylesheet)
+   -----------------------------------------------------------------------------
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap');
+@import "tailwindcss";
+@import "./design-system/firefox-acorn/tokens.css";
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-brand: var(--brand);
+  --color-success: var(--success);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: var(--radius-card);
+  --radius-pill: var(--radius-pill);
+
+  --font-sans: "Noto Sans TC", "Atkinson Hyperlegible", system-ui, sans-serif;
+
+  --shadow-float: var(--shadow-float);
+  --shadow-float-strong: var(--shadow-float-strong);
+}
+
+/* Elderly-friendly base — larger than default, generous line height */
+@layer base {
+  html { font-size: 18px; }          /* 18px baseline, not 16px */
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  * { scroll-padding-bottom: 5.5rem; } /* keep focus clear of floating bottom nav */
+}
+   ============================================================================= */

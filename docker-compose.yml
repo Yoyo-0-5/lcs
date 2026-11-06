@@ -1,0 +1,22 @@
+# 一鍵啟動新的前端（frontend/）與後端。
+# 後端的 PostgreSQL（pgvector）與 Ollama 屬外部服務，請經由 backend/.env 指向可連線的實例。
+#   範例（本機）：DATABASE_URL=postgresql://user:pass@host.docker.internal:5432/community
+#                 OLLAMA_BASE_URL=http://host.docker.internal:11434
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+
+  backend:
+    build: ./backend
+    env_file: ./backend/.env
+    environment:
+      UVICORN_RELOAD: "0"
+      SSL_DISABLE: "1"  # container 內由前端 Nginx 反向代理，後端維持 HTTP
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app  # 開發時直接把本端原始碼掛進去，改 code 不用重建

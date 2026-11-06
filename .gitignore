@@ -1,0 +1,22 @@
+# 前端（frontend/）
+node_modules/
+dist/
+*.log
+.superpowers/
+
+# 後端（backend/）
+__pycache__/
+*.pyc
+.venv/
+
+# 環境變數與密鑰（真實值一律不入庫）
+.env
+.env.*
+!.env.example
+gcs-api-*.json
+service-account*.json
+*.ts.net.crt
+*.ts.net.key
+
+# 居民上傳的照片（本機 storage backend）
+backend/data/
